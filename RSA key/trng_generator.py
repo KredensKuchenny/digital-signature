@@ -11,6 +11,7 @@ def audio_trng(N=256000, L=8):
         swapped_num = (lsb << 32) | msb
         # Perform XOR operation to increase randomness
         result = swapped_num ^ num
+
         return result
 
     # Open the wave file and read the binary data
@@ -40,7 +41,7 @@ def audio_trng(N=256000, L=8):
 
     # Check if audio file is long enough
     if len(A) < n:
-        raise ValueError("Audio file is too short")
+        raise ValueError("Error: Audio file is too short")
 
     r = []
     mask = 0b00000111
@@ -96,11 +97,11 @@ def audio_trng(N=256000, L=8):
         y += 1
 
     # Downloading 8 bits from each output sample
-    bajty_z_O = []
+    bytes_form_O = []
     for j in range(len(O) - 1):
         for i in range(0, 256, 8):
             bajt = (O[j] >> (256 - (i + 8))) & 0xFF
             if bajt != 0:
-                bajty_z_O.append(bajt)
+                bytes_form_O.append(bajt)
 
-    return bajty_z_O
+    return bytes_form_O
